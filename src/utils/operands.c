@@ -1,6 +1,6 @@
 //
 //  operands.c
-//  Esercizio1
+//  BaseComputationalBiology
 //
 //  Created by Elia Onofri on 12/10/2020.
 //

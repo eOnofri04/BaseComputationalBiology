@@ -1,25 +1,33 @@
 //
-//  esercizio1.c
-//  IN470
+//  exercise1.c
+//  BaseComputationalBiology
 //
 //  Created by Elia Onofri on 12/10/2020.
 //
 
-#include "esercizi.h"
+#include "exercise.h"
 
 #define SEED 0
 #define NBIN 10
 #define N 100000
 #define NP 5
 
-int esercizio1() {
+int exercise1() {
 	int i, np;
 	srand48(SEED);
 	double *a, *b, *P;
 	double acc;
 	FILE *fp;
+	char *filename;
+	filename = "inputs/exercise1/probabilities.tsv";
 	
-	a = (double *) malloc(sizeof(double) * N);
+	
+	a = allocate(N, double);
+	if (a == NULL){
+		printf("Could not allocate enough memory: %d doubles\n", N);
+		return -1;
+	}
+	
 	for (i = 0; i < N; i++){
 		a[i] = drand48();
 	}
@@ -28,9 +36,19 @@ int esercizio1() {
 	printf("\nVariance:\t%lf\n", evalVariance(a, N) );
 	plotHistogram(a, N, NBIN);
 	
-	fp = fopen("inputs/esercizio1/probabilities.tsv", "r");
+	fp = fopen(filename, "r");
+	if(fp == NULL){
+		printf("Could not open file: %s\n", filename);
+		return -2;
+	}
+
 	fscanf(fp, "%d", &np);
-	P = (double *) malloc(sizeof(double) * np);
+	P = allocate(np, double);
+	if (P == NULL){
+		printf("Could not allocate enough memory: %d doubles\n", np);
+		return -1;
+	}
+	
 	for (i = 0; i < np; i++){
 		fscanf(fp, "%lf", &P[i]);
 	}
@@ -44,7 +62,12 @@ int esercizio1() {
 		return 2;
 	}
 	
-	b = (double *) malloc(sizeof(double) * N);
+	b = allocate(N, double);
+	if (b == NULL){
+		printf("Could not allocate enough memory: %d doubles\n", N);
+		return -1;
+	}
+	
 	for (i = 0; i < N; i++){
 		b[i] = randomWheelSelect(a[i], P, np);
 	}

@@ -1,17 +1,17 @@
 //
 //  gnuplot.c
-//  IN470
+//  BaseComputationalBiology
 //
 //  Created by Elia Onofri on 12/10/2020.
 //
 
 #include "./graphics.h"
 
-void plotHistogram(double *a, int n, int nb);
+int plotHistogram(double *a, int n, int nb);
 
 
 
-void plotHistogram(double *a, int n, int nb){
+int plotHistogram(double *a, int n, int nb){
 	int i, bin;
 	double min, max, binsize;
 	double *bin_right_end;
@@ -32,8 +32,17 @@ void plotHistogram(double *a, int n, int nb){
 	binsize = (max-min)/nb;
 	
 	
-	bin_right_end = (double *) malloc(sizeof(double) * nb);
-	qty = (int *) malloc(sizeof(int) * nb);
+	bin_right_end = allocate(nb, double);
+	if (bin_right_end == NULL){
+		printf("Could not allocate enough memory: %d doubles\n", nb);
+		return -1;
+	}
+	
+	qty = allocate(nb, int);
+	if (qty == NULL){
+		printf("Could not allocate enough memory: %d int\n", nb);
+		return -1;
+	}
 	
 	bin_right_end[0] = min + binsize;
 	qty[0] = 0;
@@ -56,6 +65,10 @@ void plotHistogram(double *a, int n, int nb){
 	}
 	
 	fp = fopen(HIST_PLOT_PROD, "w");
+	if(fp == NULL){
+		printf("Could not open file: %s\n", HIST_PLOT_PROD);
+		return -2;
+	}
 	
 	for (i = 0; i < nb; i++){
 		fprintf(fp, "%lf\t%lf\n", bin_right_end[i] - binsize/2, (double) qty[i]/n);
@@ -67,4 +80,6 @@ void plotHistogram(double *a, int n, int nb){
 	free(qty);
 	
 	gnuplot( HIST_PLOT_GP );
+	
+	return 0;
 }

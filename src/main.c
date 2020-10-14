@@ -1,15 +1,15 @@
 //
 //  main.c
-//  Esercizio1
+//  BaseComputationalBiology
 //
 //  Created by Elia Onofri on 07/10/2020.
 //
 
 #include "./utils/utils.h"
-#include "./esercizi/esercizi.h"
+#include "./exercises/exercise.h"
 
 
 int main() {
-	return esercizio1();
+	return exercise2();
 }
 

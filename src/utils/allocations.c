@@ -1,6 +1,6 @@
 //
 //  allocations.c
-//  IN470
+//  BaseComputationalBiology
 //
 //  Created by Elia Onofri on 12/10/2020.
 //

@@ -1,6 +1,6 @@
 //
 //  graphics.h
-//  IN470
+//  BaseComputationalBiology
 //
 //  Created by Elia Onofri on 12/10/2020.
 //
@@ -17,6 +17,6 @@
 #define HIST_PLOT_PROD "products/hist_data.tsv"
 
 
-void plotHistogram(double *a, int np, int nb);
+int plotHistogram(double *a, int np, int nb);
 
 #endif /* graphics_h */
