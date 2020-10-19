@@ -8,9 +8,10 @@
 #ifndef exercise_h
 #define exercise_h
 
-#include "../utils/utils.h"
+#include "../src/utils/utils.h"
 
 int exercise1( void );
 int exercise2( void );
+int exercise3( void );
 
 #endif /* exercise_h */

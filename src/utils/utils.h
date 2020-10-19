@@ -13,7 +13,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <stdbool.h>
 #include "../graphics/graphics.h"
+#include "../randomWalks/randomWalks.h"
+#include "../patternRecognition/patternRecognition.h"
 
 // Global Macros Definition
 #define debug(x) printf("DEBUG %d", x);
@@ -43,6 +46,7 @@ double evalVariance(double *a, int n);
 
 // from random.c
 #define Random(x, y) (x + ((double) rand()/RAND_MAX)*(y-x))
+#define pickRandomInteger(a, b) (a + (rand() % (b - a + 1)))
 int randomWheelSelect(double x, double* P, int nP);
 
 #endif /* utils_h */

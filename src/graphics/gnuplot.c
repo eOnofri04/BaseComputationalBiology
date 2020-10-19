@@ -8,7 +8,8 @@
 #include "./graphics.h"
 
 int plotHistogram(double *a, int n, int nb);
-
+int plotXY(double *X, double *Y, int n);
+int plotFX(double *Y, int n);
 
 
 int plotHistogram(double *a, int n, int nb){
@@ -35,13 +36,13 @@ int plotHistogram(double *a, int n, int nb){
 	bin_right_end = allocate(nb, double);
 	if (bin_right_end == NULL){
 		printf("Could not allocate enough memory: %d doubles\n", nb);
-		return -1;
+		exit(-1);
 	}
 	
 	qty = allocate(nb, int);
 	if (qty == NULL){
 		printf("Could not allocate enough memory: %d int\n", nb);
-		return -1;
+		exit(-1);
 	}
 	
 	bin_right_end[0] = min + binsize;
@@ -67,7 +68,7 @@ int plotHistogram(double *a, int n, int nb){
 	fp = fopen(HIST_PLOT_PROD, "w");
 	if(fp == NULL){
 		printf("Could not open file: %s\n", HIST_PLOT_PROD);
-		return -2;
+		exit(-2);
 	}
 	
 	for (i = 0; i < nb; i++){
@@ -80,6 +81,49 @@ int plotHistogram(double *a, int n, int nb){
 	free(qty);
 	
 	gnuplot( HIST_PLOT_GP );
+	
+	return 0;
+}
+
+
+int plotXY(double *X, double *Y, int n){
+	int i;
+	FILE *fp;
+	
+	fp = fopen(XY_PLOT_PROD, "w");
+	if(fp == NULL){
+		printf("Could not open file: %s\n", XY_PLOT_PROD);
+		exit(-2);
+	}
+	
+	for (i = 0; i < n; i++){
+		fprintf(fp, "%lf\t%lf\n", X[i], Y[i]);
+	}
+	
+	fclose(fp);
+	
+	gnuplot( XY_PLOT_GP );
+	
+	return 0;
+}
+
+int plotFX(double *Y, int n){
+	int i;
+	FILE *fp;
+	
+	fp = fopen(XY_PLOT_PROD, "w");
+	if(fp == NULL){
+		printf("Could not open file: %s\n", XY_PLOT_PROD);
+		exit(-2);
+	}
+	
+	for (i = 0; i < n; i++){
+		fprintf(fp, "%lf\t%lf\n", (double) i, Y[i]);
+	}
+	
+	fclose(fp);
+	
+	gnuplot( XY_PLOT_GP );
 	
 	return 0;
 }

@@ -5,7 +5,15 @@
 //  Created by Elia Onofri on 12/10/2020.
 //
 
-#include "exercise.h"
+/* *****************************************************************************
+ *	Usage of random number generation and gnuplot software.
+ *	Encode the following:
+ *	 - Generation of events with specific given distribution;
+ *	 - RouletteWheelSelection to select events with given discrete distribution;
+ *	 - evaluate principal statistics (mean, variance) and relative histogram.
+ **************************************************************************** */
+
+#include "./exercise.h"
 
 #define SEED 0
 #define NBIN 10

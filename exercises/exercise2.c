@@ -5,7 +5,14 @@
 //  Created by Elia Onofri on 14/10/2020.
 //
 
-#include "exercise.h"
+/* *****************************************************************************
+ *	Shannon Entropy Evaluation of a generic english text given as input
+ *		(e.g., http://www.textfiles.com/etext/ ) as well as:
+ *	 - True Diversity
+ *	 - Shannon Diversity Index
+ **************************************************************************** */
+
+#include "./exercise.h"
 
 #define filename "inputs/exercise2/text.txt"
 
