@@ -10,6 +10,11 @@
 double evalMean(double *a, int n);
 double evalVariance(double *a, int n);
 
+/*
+ *	double evalMean(double *a, int n)
+ *
+ *	Returns the mean of vector `a` of length `n`
+ */
 double evalMean(double *a, int n){
 	int i;
 	double m = 0;
@@ -20,7 +25,11 @@ double evalMean(double *a, int n){
 }
 
 
-//mean(abs(x - x.mean())^2).
+/*
+ *	double evalVariance(double *a, int n)
+ *
+ *	Returns the variance of vector `a` of length `n`
+ */
 double evalVariance(double *a, int n){
 	int i;
 	double m = evalMean(a, n);

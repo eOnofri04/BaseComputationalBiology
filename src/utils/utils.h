@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <stdbool.h>
+#include <string.h>
 #include "../graphics/graphics.h"
 #include "../randomWalks/randomWalks.h"
 #include "../patternRecognition/patternRecognition.h"
@@ -33,9 +34,10 @@
 // from informationTheory.c
 #define NCHAR sizeof(char)
 double shannonEntropy(int *f, int n);
-int evalFileFrequency(char *filename, double **f);
-int evalFileFrequencyFromSet(char *filename, double **f, char *cset, int m);
-int evalFileAlphabethFrequency(char *filename, double **f);
+double trueDiversity(int *f, int n, int q);
+double * evalFileFrequency(char *filename);
+double * evalFileFrequencyFromSet(char *filename, char *cset, int m);
+double * evalFileAlphabethFrequency(char *filename);
 
 // from operands.c
 #define max(a,b) a>=b?a:b
@@ -47,6 +49,6 @@ double evalVariance(double *a, int n);
 // from random.c
 #define Random(x, y) (x + ((double) rand()/RAND_MAX)*(y-x))
 #define pickRandomInteger(a, b) (a + (rand() % (b - a + 1)))
-int randomWheelSelect(double x, double* P, int nP);
+int randomWheelSelect(double x, double *P, int nP);
 
 #endif /* utils_h */

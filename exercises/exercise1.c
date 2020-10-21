@@ -42,7 +42,7 @@ int exercise1() {
 	
 	printf("\nMean:\t%lf\n", evalMean(a, N) );
 	printf("\nVariance:\t%lf\n", evalVariance(a, N) );
-	plotHistogram(a, N, NBIN);
+	plotHistogram(a, N, NBIN, "title='Histogram of Random Values'");
 	
 	fp = fopen(filename, "r");
 	if(fp == NULL){
@@ -82,7 +82,7 @@ int exercise1() {
 	
 	printf("\nMean:\t%lf\n", evalMean(b, N) );
 	printf("\nVariance:\t%lf\n", evalVariance(b, N) );
-	plotHistogram(b, N, np);
+	plotHistogram(b, N, np, "title='Histogram of Random Wheel'");
 	
 	free(a);
 	free(b);
