@@ -1,9 +1,14 @@
+if (!exists("filename")) filename='products/randomWalkData.tsv'
+if (!exists("title")) title='1D Random Walk'
+if (!exists("xlabel")) xlabel='time'
+if (!exists("ylabel")) ylabel='x'
+if (!exists("datatitle")) datatitle='RW'
 
-set xlabel "time"
-set ylabel "x"
-set title "Plot"
+set xlabel xlabel
+set ylabel ylabel
+set title title
 set grid
 
 set xzeroaxis lt 7
 
-plot "products/randomWalkData.tsv" u 0:1 w l title "1D-walk"
+plot filename u 0:1 w l title datatitle

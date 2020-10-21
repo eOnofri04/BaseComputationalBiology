@@ -18,58 +18,130 @@
 
 #include "./exercise.h"
 
-#define N 1000
-#define SEED 1234
-#define Nsample 1
+#define N 10000
+#define D 3
+#define SEED 0
+#define Nsample 1000
+#define GRANULARITY 1
+#define MULTI_RANDOM_WALK "products/random_walks.tsv"
 
 int exercise3( void ){
-	int i, j;
-	double *dis, *dis2;
+	int	d,		// dimensional index
+		t,		// time index
+		s,		// sample index
+		*xs;	// progressive position of all the concurrent trajectories as
+				// (x_0..x_D)..(x_0..x_D) Nsample times
+	double	distance,		// euclidean distance
+			*dis,			// mean square displacement
+			*dis2,			// mean square displacement
+			*means,
+			*deviations;
+	FILE *fp;	// file to store the path
+	
 	srand(SEED);
 	
-	// 1D
+	performDiscreteRandomWalkOnFile(D, N, NULL, RANDOM_WALK_DATA);
+	switch (D) {
+		case 1:
+			gnuplot( D1_RANDOM_WALK, "" );
+			break;
+			
+		case 2:
+			gnuplot( D2_RANDOM_WALK, "" );
+			break;
+			
+		case 3:
+			gnuplot( D3_RANDOM_WALK, "" );
+			break;
+			
+		default:
+			break;
+	}
 	
-	performRandomWalk(1, N, RANDOM_WALK_DATA);
-	gnuplot( D1_RANDOM_WALK );
+	// evaluate mean square Displacement
 	
-	// evaluate Nsample displacement and average them
-	dis = evaluateRandomWalkDisplacement(1, N);
-	for (i = 1; i < Nsample; i++){
-		dis2 = evaluateRandomWalkDisplacement(1, N);
-		for (j = 0; j < N; j++){
-			dis[j] += dis2[j];
+	dis = evaluateDiscreteRandomWalkDisplacement(D, N);
+	plotFX(dis, N, "title='Square Displacement'; datatitle='RW square displacement'; xlabel='t'; ylabel='distance'");
+	
+	// evaluate Nsample mean square displacement and average them
+	
+	for (s = 1; s < Nsample; s++){
+		dis2 = evaluateDiscreteRandomWalkDisplacement(D, N);
+		for (t = 0; t < N; t++){
+			dis[t] += dis2[t];
 		}
 		free( dis2 );
 	}
-	for (j = 0; j < N; j++){
-		dis[j] /= Nsample;
+	for (t = 0; t < N; t++){
+		dis[t] /= Nsample;
 	}
 	
-	plotFX(dis, N);
-	
+	plotFX(dis, N, "title='Square Displacement'; datatitle='square displacement mean'; xlabel='t'; ylabel='distance'");
 	free( dis );
 	
-	// 2D
+	// evaluate Nsample mean displacement and every GRANULARITY
+	//  plot mean and variance.
 	
-	performRandomWalk(2, N, RANDOM_WALK_DATA);
-	gnuplot( D2_RANDOM_WALK );
+	xs = callocate(Nsample * D, int);
+	if (xs == NULL){
+		printf("Could not allocate enough memory: %d int\n", Nsample * D);
+		exit(-1);
+	}
+	means = callocate(N, double);
+	if (means == NULL){
+		printf("Could not allocate enough memory: %d int\n", N);
+		exit(-1);
+	}
+	deviations = callocate(N, double);
+	if (deviations == NULL){
+		printf("Could not allocate enough memory: %d int\n", N);
+		exit(-1);
+	}
+	fp = fopen(MULTI_RANDOM_WALK, "w");
+	if (fp == NULL){
+		printf("Could not open file: %s\n", MULTI_RANDOM_WALK);
+		exit(-2);
+	}
 	
-	// evaluate Nsample displacement and average them
-	dis = evaluateRandomWalkDisplacement(2, N);
-	for (i = 1; i < Nsample; i++){
-		dis2 = evaluateRandomWalkDisplacement(2, N);
-		for (j = 0; j < N; j++){
-			dis[j] += dis2[j];
+	for (t = 1; t < N; t++){
+		// Perform the Nsample random walks
+		for (s = 0; s < Nsample; s++){
+			performDiscreteRandomWalk(D, 1, xs + s*D);
 		}
-		free( dis2 );
-	}
-	for (j = 0; j < N; j++){
-		dis[j] /= Nsample;
+		for (s = 0; s < Nsample; s++){
+			fprintf(fp, "(");
+			fprintf(fp, "%d", xs[s*D]);
+			for (d = 1; d < D; d++){
+				fprintf(fp, ", %d", xs[s*D+d]);
+			}
+			fprintf(fp, ")\t");
+		}
+		fprintf(fp, "\n");
+		for (s = 0; s < Nsample; s++){
+			distance = 0.;
+			for (d = 0; d < D; d++){
+				distance += pow(xs[s*D+d],2);
+			}
+			means[t] += sqrt(distance);
+		}
+		means[t] /= Nsample;
+		for (s = 0; s < Nsample; s++){
+			distance = 0.;
+			for (d = 0; d < D; d++){
+				distance += pow(xs[s*D+d],2);
+			}
+			deviations[t] += pow(sqrt(distance)-means[t], 2);
+		}
+		deviations[t] = sqrt(deviations[t]/Nsample);
 	}
 	
-	plotFX(dis, N);
+	fclose( fp );
 	
-	free( dis );
+	plotFXE(means, deviations, N, "title='Displacement'; datatitle='displacement mean'; errortitle='standard deviation'; xlabel='t'; ylabel='distance'");
+	
+	free( means );
+	free( deviations );
+	free( xs );
 	
 	return 0;
 }

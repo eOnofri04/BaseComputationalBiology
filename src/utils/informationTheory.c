@@ -9,14 +9,15 @@
 
 double shannonEntropy(int *f, int n);
 double trueDiversity(int *f, int n, int q);
-int evalFileFrequency(char *filename, double **f);
-int evalFileFrequencyFromSet(char *filename, double **f, char *cset, int m);
-int evalFileAlphabethFrequency(char *filename, double **f);
+double * evalFileFrequency(char *filename);
+double * evalFileFrequencyFromSet(char *filename, char *cset, int m);
+double * evalFileAlphabethFrequency(char *filename);
 
 /*
- * ShannonEntropy(int* a, int n)
- * Evaluates the entropy of the array of frequencies `f` (of length `n`)
- * It skips when f[i] = 0;
+ *	double ShannonEntropy(int* a, int n)
+ *
+ *	Evaluates the entropy of the array of frequencies `f` (of length `n`)
+ *	It skips an entry when f[i] = 0;
  */
 double shannonEntropy(int *f, int n){
 	int i;
@@ -31,8 +32,9 @@ double shannonEntropy(int *f, int n){
 	return -H;
 }
 /*
- * double trueDiversity(int *f, int n, int q)
- * Evaluates the true diversity of order `q` over frequencies `f`(of length `n`)
+ *	double trueDiversity(int *f, int n, int q)
+ *
+ *	Evaluates the `q`-th true diversity over frequencies `f` (of length `n`)
  */
 double trueDiversity(int *f, int n, int q){
 	int i;
@@ -45,16 +47,12 @@ double trueDiversity(int *f, int n, int q){
 }
 
 /*
- * evalFileFrequency(char *filename, double *f)
- * Evaluate the frequency of the chars contained in the file specified
- * by `filename` and populates the array `f` (of length sizeof(char))
- * with the frequencies found.
- * The method return:
- *   `0` if everything goes well
- *  `-1` if allocation related issues occurred
- *  `-2` if file related issues occurred
+ *	double * evalFileFrequency(char *filename)
+ *
+ *	Returns the frequency of the chars contained in the file specified by
+ *	 `filename` as an array size sizeof(char).
  */
-int evalFileFrequency(char *filename, double **f1){
+double * evalFileFrequency(char *filename){
 	int ch, i, n=0;
 	double *f;
 	FILE *fp;
@@ -62,14 +60,14 @@ int evalFileFrequency(char *filename, double **f1){
 	f = callocate(NCHAR, double);
 	if (f == NULL){
 		printf("Could not allocate enough memory: %lu doubles\n", NCHAR);
-		return -1;
+		exit(-1);
 	}
 	
 	fp = fopen(filename, "r");
 	
 	if(fp == NULL){
 		printf("Could not open file: %s\n",filename);
-		return -2;
+		exit(-2);
 	}
 	
 	while( (ch = fgetc(fp)) != EOF ){
@@ -81,22 +79,18 @@ int evalFileFrequency(char *filename, double **f1){
 		f[i] /= n;
 	}
 	
-	*f1 = f;
+	fclose(fp);
 	
-	return 0;
+	return f;
 }
 
 /*
- * evalFileFrequencyFromSet(char *filename, double *f, char *cset, int m)
- * Evaluate the frequency of the chars in `cset` contained in the file
- * specified by `filename` and populates the array `f` (of length `m`)
- * with the frequencies found.
- * The method return:
- *   `0` if everything goes well
- *  `-1` if allocation related issues occurred
- *  `-2` if file related issues occurred
+ *	double * evalFileFrequencyFromSet(char *filename, char *cset, int m)
+ *
+ *	Returns the frequency of the chars in `cset` contained in the file
+ *	 specified by `filename` as an array size m.
  */
-int evalFileFrequencyFromSet(char *filename, double **f1, char *cset, int m){
+double * evalFileFrequencyFromSet(char *filename, char *cset, int m){
 	int ch, i, j, n=0;
 	double *f;
 	FILE *fp;
@@ -104,14 +98,14 @@ int evalFileFrequencyFromSet(char *filename, double **f1, char *cset, int m){
 	f = callocate(m, double);
 	if (f == NULL){
 		printf("Could not allocate enough memory: %d doubles\n", m);
-		return -1;
+		exit(-1);
 	}
 	
 	fp = fopen(filename, "r");
 	
 	if(fp == NULL){
 		printf("Could not open file: %s\n",filename);
-		return -2;
+		exit(-2);
 	}
 	
 	while( (ch = fgetc(fp)) != EOF ){
@@ -127,23 +121,19 @@ int evalFileFrequencyFromSet(char *filename, double **f1, char *cset, int m){
 		f[i] /= n;
 	}
 	
-	*f1 = f;
+	fclose(fp);
 	
-	return 0;
+	return f;
 }
 
 
 /*
- * evalFileAlphabethFrequency(char *filename, double *f)
- * Evaluate the frequency of the chars `a/A-z/Z` contained in the file
- * specified by `filename` and populates the array `f` (of length `26`)
- * with the frequencies found.
- * The method return:
- *   `0` if everything goes well
- *  `-1` if allocation related issues occurred
- *  `-2` if file related issues occurred
+ *	double * evalFileAlphabethFrequency(char *filename)
+ *
+ *	Returns the frequency of the chars `a/A-z/Z contained in the file
+ *	 specified by `filename` as an array size 26.
  */
-int evalFileAlphabethFrequency(char *filename, double **f1){
+double * evalFileAlphabethFrequency(char *filename){
 	int ch, i, n=0, m=26;
 	double *f;
 	FILE *fp;
@@ -151,14 +141,14 @@ int evalFileAlphabethFrequency(char *filename, double **f1){
 	f = callocate(m, double);
 	if (f == NULL){
 		printf("Could not allocate enough memory: %d doubles\n", m);
-		return -1;
+		exit(-1);
 	}
 	
 	fp = fopen(filename, "r");
 	
 	if(fp == NULL){
 		printf("Could not open file: %s\n",filename);
-		return -2;
+		exit(-2);
 	}
 	
 	while( (ch = fgetc(fp)) != EOF ){
@@ -176,7 +166,7 @@ int evalFileAlphabethFrequency(char *filename, double **f1){
 		f[i] /= n;
 	}
 	
-	*f1 = f;
+	fclose(fp);
 	
-	return 0;
+	return f;
 }

@@ -13,7 +13,8 @@
 #define RANDOM_WALK_DATA "products/randomWalkData.tsv"
 
 // from randomWalks.c
-void performRandomWalk(int D, int N, char *filename);
-double * evaluateRandomWalkDisplacement(int D, int N);
+void performDiscreteRandomWalkOnFile(int D, int N, int *x, char *filename);
+int * performDiscreteRandomWalk(int D, int N, int *x);
+double * evaluateDiscreteRandomWalkDisplacement(int D, int N);
 
 #endif /* randomWalks_h */
