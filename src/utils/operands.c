@@ -9,6 +9,7 @@
 
 double evalMean(double *a, int n);
 double evalVariance(double *a, int n);
+void normalizeInPlace(double *a, int n);
 
 /*
  *	double evalMean(double *a, int n)
@@ -40,3 +41,18 @@ double evalVariance(double *a, int n){
 	}
 	return v/n;
 }
+
+/*
+ *	void normalizeInPlace(double *a, int n)
+ *
+ *	Normalize in place the vector `a` of length `n`.
+ */
+void normalizeInPlace(double *a, int n){
+	int i;
+	float sum = 0;
+	
+	for (i = 0; i < n; i++) sum += a[i];
+	for (i = 0; i < n; i++) a[i] /= sum;
+	return ;
+}
+

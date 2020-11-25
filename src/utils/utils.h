@@ -19,9 +19,10 @@
 #include "../graphics/graphics.h"
 #include "../randomWalks/randomWalks.h"
 #include "../patternRecognition/patternRecognition.h"
+#include "../biology/biology.h"
 
 // Global Macros Definition
-#define debug(x) printf("DEBUG %d", x);
+#define debug(x) printf("DEBUG %d\n", x);
 #define hi printf("Hello, World!\n")
 #define ln printf("\n")
 
@@ -46,6 +47,7 @@ double * evalFileAlphabethFrequency(char *filename);
 #define isApprox(x, y) fabs(x - y) < ERR
 double evalMean(double *a, int n);
 double evalVariance(double *a, int n);
+void normalizeInPlace(double *a, int n);
 
 // from random.c
 #define Random(x, y) (x + ((double) rand()/RAND_MAX)*(y-x))

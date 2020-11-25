@@ -10,5 +10,5 @@
 
 
 int main( void ){
-	return exercise3();
+	return exercise5(&maxLysin);
 }
