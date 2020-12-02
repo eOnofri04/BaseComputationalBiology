@@ -74,13 +74,15 @@ void plotHistogram(double *a, int n, int nb, char *gpargs){
 	
 	bin_right_end = allocate(nb, double);
 	if (bin_right_end == NULL){
-		printf("Could not allocate enough memory: %d doubles\n", nb);
+		fprintf(stderr, "ERROR in: plotHistogram\n");
+		fprintf(stderr, "Could not allocate enough memory: %d doubles\n", nb);
 		exit(-1);
 	}
 	
 	qty = allocate(nb, int);
 	if (qty == NULL){
-		printf("Could not allocate enough memory: %d int\n", nb);
+		fprintf(stderr, "ERROR in: plotHistogram\n");
+		fprintf(stderr, "Could not allocate enough memory: %d int\n", nb);
 		exit(-1);
 	}
 	
@@ -106,7 +108,8 @@ void plotHistogram(double *a, int n, int nb, char *gpargs){
 	
 	fp = fopen(HIST_PLOT_PROD, "w");
 	if(fp == NULL){
-		printf("Could not open file: %s\n", HIST_PLOT_PROD);
+		fprintf(stderr, "ERROR in: plotHistogram\n");
+		fprintf(stderr, "Could not open file: %s\n", HIST_PLOT_PROD);
 		exit(-2);
 	}
 	
@@ -135,7 +138,8 @@ void plotXY(double *X, double *Y, int n, char *gpargs){
 	
 	fp = fopen(XY_PLOT_PROD, "w");
 	if(fp == NULL){
-		printf("Could not open file: %s\n", XY_PLOT_PROD);
+		fprintf(stderr, "ERROR in: plotXY\n");
+		fprintf(stderr, "Could not open file: %s\n", XY_PLOT_PROD);
 		exit(-2);
 	}
 	
@@ -161,7 +165,8 @@ void plotFX(double *Y, int n, char *gpargs){
 	
 	fp = fopen(XY_PLOT_PROD, "w");
 	if(fp == NULL){
-		printf("Could not open file: %s\n", XY_PLOT_PROD);
+		fprintf(stderr, "ERROR in: plotFX\n");
+		fprintf(stderr, "Could not open file: %s\n", XY_PLOT_PROD);
 		exit(-2);
 	}
 	
@@ -188,7 +193,8 @@ void plotFXE(double *Y, double *E, int n, char *gpargs){
 	
 	fp = fopen(XYE_PLOT_PROD, "w");
 	if(fp == NULL){
-		printf("Could not open file: %s\n", XYE_PLOT_PROD);
+		fprintf(stderr, "ERROR in: plotFXE\n");
+		fprintf(stderr, "Could not open file: %s\n", XYE_PLOT_PROD);
 		exit(-2);
 	}
 	

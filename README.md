@@ -22,6 +22,7 @@ BaseComputationalBiology
 - inputs: Holds the inputs for the exercises (one directory per exercise)
 - products: Std target directory where data are stored.
 - src: Sources folder
+  - biology: genotype generation, mutation and encoding functions
   - graphics: `GnuPlot` related functions
   - patternRecognition: String pattern recognition algorithms
     - knut-Morris-Pratt

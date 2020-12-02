@@ -18,34 +18,39 @@
 
 #include "./exercise.h"
 
-#define SEED 1234
+#define SEED (long)1234
 
 int exercise4 ( void ){
 	srand(SEED);
 	int l = 100, ptr, i;
 	char *n, *m, c;
 	
-	printf("A amminoacids sequence: %s\n", generateAmminoacidSequence(l));
+	fprintf(stdout, "-------------------------------------\n");
+	fprintf(stdout, "Parameters are:\n");
+	fprintf(stdout, " - Simulation seed: %lu\n", SEED);
+	fprintf(stdout, "-------------------------------------\n");
+	
+	fprintf(stdout, "A amminoacids sequence: %s\n", generateAmminoacidSequence(l));
 	n = generateNucleotideSequence(l);
-	printf("A DNA sequence: %s\n", n);
+	fprintf(stdout, "A DNA sequence: %s\n", n);
 	m = convertDNA2RNA(n, l);
-	printf("A RNA sequence: %s\n", m);
+	fprintf(stdout, "A RNA sequence: %s\n", m);
 	
 	//   ->>>111222<<<---
 //	m = "GAUGAUGGUAUAAUGU";
 //	l = 16;
 	ptr = findStartEncode(m, l);
-	printf("Analisys of:\n%s\n", m);
+	fprintf(stdout, "Analisys of:\n%s\n", m);
 	for (i = 0; i < ptr-3; i++){
-		printf(" ");
+		fprintf(stdout, " ");
 	}
-	printf(">>>");
+	fprintf(stdout, ">>>");
 	c = geneticEnconding(&m[ptr]);
 	while (c != '\0'){
-		printf(" %c ", c);
+		fprintf(stdout, " %c ", c);
 		ptr += 3;
 		c = geneticEnconding(&m[ptr]);
 	}
-	printf("<<<\n");
+	fprintf(stdout, "<<<\n");
 	return 0;
 }

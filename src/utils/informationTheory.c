@@ -59,14 +59,16 @@ double * evalFileFrequency(char *filename){
 	
 	f = callocate(NCHAR, double);
 	if (f == NULL){
-		printf("Could not allocate enough memory: %lu doubles\n", NCHAR);
+		fprintf(stderr, "ERROR in: evalFileFrequency\n");
+		fprintf(stderr, "Could not allocate enough memory: %lu doubles\n", NCHAR);
 		exit(-1);
 	}
 	
 	fp = fopen(filename, "r");
 	
 	if(fp == NULL){
-		printf("Could not open file: %s\n",filename);
+		fprintf(stderr, "ERROR in: evalFileFrequency\n");
+		fprintf(stderr, "Could not open file: %s\n",filename);
 		exit(-2);
 	}
 	
@@ -97,14 +99,16 @@ double * evalFileFrequencyFromSet(char *filename, char *cset, int m){
 	
 	f = callocate(m, double);
 	if (f == NULL){
-		printf("Could not allocate enough memory: %d doubles\n", m);
+		fprintf(stderr, "ERROR in: evalFileFrequencyFromSet\n");
+		fprintf(stderr, "Could not allocate enough memory: %d doubles\n", m);
 		exit(-1);
 	}
 	
 	fp = fopen(filename, "r");
 	
 	if(fp == NULL){
-		printf("Could not open file: %s\n",filename);
+		fprintf(stderr, "ERROR in: evalFileFrequencyFromSet\n");
+		fprintf(stderr, "Could not open file: %s\n",filename);
 		exit(-2);
 	}
 	
@@ -140,14 +144,16 @@ double * evalFileAlphabethFrequency(char *filename){
 	
 	f = callocate(m, double);
 	if (f == NULL){
-		printf("Could not allocate enough memory: %d doubles\n", m);
+		fprintf(stderr, "ERROR in: evalFileAlphabethFrequency\n");
+		fprintf(stderr, "Could not allocate enough memory: %d doubles\n", m);
 		exit(-1);
 	}
 	
 	fp = fopen(filename, "r");
 	
 	if(fp == NULL){
-		printf("Could not open file: %s\n",filename);
+		fprintf(stderr, "ERROR in: evalFileAlphabethFrequency\n");
+		fprintf(stderr, "Could not open file: %s\n",filename);
 		exit(-2);
 	}
 	

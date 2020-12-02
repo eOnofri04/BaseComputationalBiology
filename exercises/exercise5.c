@@ -26,11 +26,12 @@
 
 #include "./exercise.h"
 
-#define SIM_STEP  10 // living time of the simulations
+#define SIM_STEP  1000 // living time of the simulations
 #define START_LEN 60   // initial length of nucleotides + START & STOP codons
 #define MIN_LEN   10   // minimum number of protein
-#define POP_N     100  // entities number within the population
-#define SEED      1234
+#define POP_N     200  // entities number within the population
+#define SEED      (long) 1234
+//#define SEED      (unsigned) time(NULL)
 #define SCORES_FILENAME "products/scores_simulation.tsv"
 
 int exercise5(double (*score)(char *, int)){
@@ -43,6 +44,15 @@ int exercise5(double (*score)(char *, int)){
 	int select;
 	double Preproduce[POP_N];
 	FILE *fp;
+	
+	fprintf(stdout, "-------------------------------------\n");
+	fprintf(stdout, "Parameters are:\n");
+	fprintf(stdout, " - Number of simulation steps: %d\n", SIM_STEP);
+	fprintf(stdout, " - Initial nucleotides length: %d\n", START_LEN);
+	fprintf(stdout, " - Minimum number of proteins: %d\n", MIN_LEN);
+	fprintf(stdout, " - Population size: %d\n", POP_N);
+	fprintf(stdout, " - Simulation seed: %lu\n", SEED);
+	fprintf(stdout, "-------------------------------------\n");
 	
 	srand48(SEED);
 	

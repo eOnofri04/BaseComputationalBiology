@@ -23,7 +23,8 @@ int boyerMoore(char *T, int nT, char *P, int nP, int **ans){
 	_Bool *idxs;
 	idxs = allocate(nT, _Bool);
 	if (idxs == NULL){
-		printf("Could not allocate enough memory: %d _Bool\n", nT);
+		fprintf(stderr, "ERROR in: boyerMoore\n");
+		fprintf(stderr, "Could not allocate enough memory: %d _Bool\n", nT);
 		exit(-1);
 	}
 	g = goodSuffixPrevaluation(P, nP);
@@ -59,7 +60,8 @@ int boyerMoore(char *T, int nT, char *P, int nP, int **ans){
 	// build the answer array
 	*ans = allocate(n, int);
 	if (ans == NULL){
-		printf("Could not allocate enough memory: %d int\n", n);
+		fprintf(stderr, "ERROR in: boyerMoore\n");
+		fprintf(stderr, "Could not allocate enough memory: %d int\n", n);
 		exit(-1);
 	}
 	j = 0;
@@ -83,7 +85,8 @@ int * badCharacterPrevaluaion(char *P, int nP){
 	int i, *f;
 	f = allocate(NCHAR, int);
 	if (f == NULL){
-		printf("Could not allocate enough memory: %lu int\n", NCHAR);
+		fprintf(stderr, "ERROR in: badCharacterPrevaluaion\n");
+		fprintf(stderr, "Could not allocate enough memory: %lu int\n", NCHAR);
 		exit(-1);
 	}
 	

@@ -27,14 +27,16 @@ void performDiscreteRandomWalkOnFile(int D, int N, int *x, char *filename){
 	if (x == NULL){
 		x = callocate(D, int);
 		if (x == NULL){
-			printf("Could not allocate enough memory: %d int\n", D);
+			fprintf(stderr, "ERROR in: performDiscreteRandomWalkOnFile\n");
+			fprintf(stderr, "Could not allocate enough memory: %d int\n", D);
 			exit(-1);
 		}
 	}
     
 	fp = fopen(filename, "w");
 	if(fp == NULL){
-		printf("Could not open file: %s\n", filename);
+		fprintf(stderr, "ERROR in: performDiscreteRandomWalkOnFile\n");
+		fprintf(stderr, "Could not open file: %s\n", filename);
 		exit(-2);
 	}
 	
@@ -70,7 +72,8 @@ int * performDiscreteRandomWalk(int D, int N, int *x){
     
     pos = allocate((N+1)*D, int);
     if (pos == NULL){
-        printf("Could not allocate enough memory: %d int\n", N*D);
+		fprintf(stderr, "ERROR in: performDiscreteRandomWalk\n");
+        fprintf(stderr, "Could not allocate enough memory: %d int\n", N*D);
         exit(-1);
     }
     
@@ -104,12 +107,14 @@ double * evaluateDiscreteRandomWalkDisplacement(int D, int N){
 	double *dis;// displacement array
 	pos = callocate(D, int);
 	if (pos == NULL){
-		printf("Could not allocate enough memory: %d int\n", D);
+		fprintf(stderr, "ERROR in: evaluateDiscreteRandomWalkDisplacement\n");
+		fprintf(stderr, "Could not allocate enough memory: %d int\n", D);
 		exit(-1);
 	}
 	dis = callocate(N+1, double);
 	if (dis == NULL){
-		printf("Could not allocate enough memory: %d double\n", N);
+		fprintf(stderr, "ERROR in: evaluateDiscreteRandomWalkDisplacement\n");
+		fprintf(stderr, "Could not allocate enough memory: %d double\n", N);
 		exit(-1);
 	}
 	

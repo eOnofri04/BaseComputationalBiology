@@ -83,7 +83,8 @@ char * insMutation(char *genotype){
 	
 	mut = allocate(len+2, char);
 	if (mut == NULL){
-		printf("Could not allocate enough memory: %lu chars\n", len + 2);
+		fprintf(stderr, "ERROR in: insMutation\n");
+		fprintf(stderr, "Could not allocate enough memory: %lu chars\n", len + 2);
 		exit(-1);
 	}
 	
@@ -114,7 +115,8 @@ char * delMutation(char *genotype){
 	
 	mut = allocate(len, char);
 	if (mut == NULL){
-		printf("Could not allocate enough memory: %lu chars\n", len);
+		fprintf(stderr, "ERROR in: delMutation\n");
+		fprintf(stderr, "Could not allocate enough memory: %lu chars\n", len);
 		exit(-1);
 	}
 	

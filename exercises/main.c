@@ -8,7 +8,13 @@
 #include "./exercise.h"
 #include "../src/utils/utils.h"
 
-
 int main( void ){
-	return exercise5(&maxLysin);
+	int ans;
+	clock_t start, stop;
+	fprintf(stdout, "Start computation...\n");
+	start = clock();
+	ans = exercise5(&maxLysin);
+	stop = clock();
+	fprintf(stdout, "Computation terminate with code %d\n", ans);
+	fprintf(stdout, "Elapsed time: %lf seconds\n\n", 1.*(stop - start)/CLOCKS_PER_SEC);
 }

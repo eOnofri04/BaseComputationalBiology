@@ -20,6 +20,11 @@ int exercise2(){
 	int i;
 	char cset[26] =  {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
 	double *freqUL = NULL, *freqL = NULL, accUL=0, accL=0;
+	
+	fprintf(stdout, "-------------------------------------\n");
+	fprintf(stdout, "No specified parameters.\n");
+	fprintf(stdout, "-------------------------------------\n");
+	
 	freqUL = evalFileAlphabethFrequency(filename);
 	freqL  = evalFileFrequencyFromSet(filename, cset, 26);
 	for (i = 0; i < 26; i++){
@@ -27,7 +32,7 @@ int exercise2(){
 		accUL+=freqUL[i];
 		accL+=freqL[i];
 	}
-	printf("\nULcase sum: %lf - %lf :mus esac L\n\n", accUL, accL);
+	fprintf(stdout, "\nULcase sum: %lf - %lf :mus esac L\n\n", accUL, accL);
 	
 	return 0;
 }

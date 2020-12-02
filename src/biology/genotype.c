@@ -23,7 +23,8 @@ char * generateNucleotideSequence(int n){
 	int i;
 	s = allocate(n+1, char);
 	if (s == NULL){
-		printf("Could not allocate enough memory: %d chars\n", n + 1);
+		fprintf(stderr, "ERROR in: generateNucleotideSequence\n");
+		fprintf(stderr, "Could not allocate enough memory: %d chars\n", n + 1);
 		exit(-1);
 	}
 	for (i = 0; i < n; i++){
@@ -38,7 +39,8 @@ char * generateAmminoacidSequence(int n){
 	int i;
 	s = allocate(n+1, char);
 	if (s == NULL){
-		printf("Could not allocate enough memory: %d chars\n", n + 1);
+		fprintf(stderr, "ERROR in: generateAmminoacidSequence\n");
+		fprintf(stderr, "Could not allocate enough memory: %d chars\n", n + 1);
 		exit(-1);
 	}
 	for (i = 0; i < n; i++){
@@ -55,7 +57,8 @@ char * convertDNA2RNA(char *dna, int n){
 	nr = min(n, (int) strlen(dna));
 	rna = allocate(nr+1, char);
 	if (rna == NULL){
-		printf("Could not allocate enough memory: %d chars\n", nr + 1);
+		fprintf(stderr, "ERROR in: convertDNA2RNA\n");
+		fprintf(stderr, "Could not allocate enough memory: %d chars\n", nr + 1);
 		exit(-1);
 	}
 	for (i = 0; i < nr; i++){
@@ -64,7 +67,10 @@ char * convertDNA2RNA(char *dna, int n){
 			case 'T': rna[i] = 'A'; break;
 			case 'C': rna[i] = 'G'; break;
 			case 'G': rna[i] = 'C'; break;
-			default : printf("ERROR: convertDNA2RNA - %d\n", dna[i]); exit(-4);
+			default :
+				fprintf(stderr, "ERROR in: convertDNA2RNA\n");
+				fprintf(stderr, "found character: %c(%d)\n", dna[i], dna[i]);
+				exit(-4);
 		}
 	}
 	rna[nr] = '\0';
@@ -79,7 +85,7 @@ char geneticEnconding(char *triplet){
 				case 'U': return triplet[2]=='G' ? 'M' : 'I';
 				case 'A': return triplet[2]=='A'||triplet[2]=='G' ? 'K' : 'N';
 				case 'G': return triplet[2]=='A'||triplet[2]=='G' ? 'R' : 'S';
-				default : printf("ERROR: geneticEnconding\n"); exit(-3);
+				default : break;
 			}
 		case 'C':
 			switch (triplet[1]) {
@@ -87,7 +93,7 @@ char geneticEnconding(char *triplet){
 				case 'G': return 'R';
 				case 'U': return 'L';
 				case 'A': return triplet[2]=='A'||triplet[2]=='G' ? 'Q' : 'H';
-				default : printf("ERROR: geneticEnconding\n"); exit(-3);
+				default : break;
 			}
 			break;
 			
@@ -97,7 +103,7 @@ char geneticEnconding(char *triplet){
 				case 'G': return 'G';
 				case 'U': return 'V';
 				case 'A': return triplet[2]=='A'||triplet[2]=='G' ? 'E' : 'D';
-				default : printf("ERROR: geneticEnconding\n"); exit(-3);
+				default : break;
 			}
 			break;
 			
@@ -107,13 +113,18 @@ char geneticEnconding(char *triplet){
 				case 'U': return triplet[2]=='A'||triplet[2]=='G' ? 'L' : 'F';
 				case 'A': return triplet[2]=='A'||triplet[2]=='G' ? '\0' : 'Y';
 				case 'G': return triplet[2]=='A' ? '\0' : (triplet[2]=='G' ? 'W' : 'C');
-				default : printf("ERROR: geneticEnconding\n"); exit(-3);
+				default : break;
 			}
 			break;
 		
-		default : printf("ERROR: geneticEnconding\n"); exit(-3);
+		default : break;
 	}
-	return 1;
+	fprintf(stderr, "ERROR in: geneticEnconding\n");
+	fprintf(stderr, "found triplet: ");
+	fprintf(stderr, "%c(%d)-", triplet[0], triplet[0]);
+	fprintf(stderr, "%c(%d)-", triplet[1], triplet[1]);
+	fprintf(stderr, "%c(%d)\n", triplet[2], triplet[2]);
+	exit(-3);
 }
 
 /*
@@ -233,7 +244,8 @@ char * encodeSequenceExtended(char *dna, int l){
 	
 	encode = callocate(l+1, char);
 	if (encode == NULL){
-		printf("Could not allocate enough memory: %d chars\n", l + 1);
+		fprintf(stderr, "ERROR in: encodeSequenceExtended\n");
+		fprintf(stderr, "Could not allocate enough memory: %d chars\n", l + 1);
 		exit(-1);
 	}
 	
@@ -301,10 +313,13 @@ int encodeSequence(char *dna, int l, char **encodePtr){
 		return 0;
 	}
 	
-	n = (ptrStop-ptrStart)/3;
+	n = ptrStop/3;
 	encode = callocate(n+1, char);
 	if (encode == NULL){
-		printf("Could not allocate enough memory: %d chars\n", n + 1);
+		fprintf(stderr, "ERROR in: encodeSequence\n");
+		fprintf(stderr, "Could not allocate enough memory: %d chars\n", n + 1);
+		fprintf(stderr, "ptrStop = %d\n", ptrStop);
+		fprintf(stderr, "ptrStart = %d\n", ptrStart);
 		exit(-1);
 	}
 	for (i = ptrStart; i < ptrStop; i+=3){

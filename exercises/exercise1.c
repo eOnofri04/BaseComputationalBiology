@@ -15,10 +15,9 @@
 
 #include "./exercise.h"
 
-#define SEED 0
+#define SEED (long)1234
 #define NBIN 10
-#define N 100000
-#define NP 5
+#define N    100000
 
 int exercise1() {
 	int i, np;
@@ -29,10 +28,16 @@ int exercise1() {
 	char *filename;
 	filename = "inputs/exercise1/probabilities.tsv";
 	
+	fprintf(stdout, "-------------------------------------\n");
+	fprintf(stdout, "Parameters are:\n");
+	fprintf(stdout, " - Number of bins: %d\n", NBIN);
+	fprintf(stdout, " - Number of sampled elements: %d\n", N);
+	fprintf(stdout, " - Simulation seed: %lu\n", SEED);
+	fprintf(stdout, "-------------------------------------\n");
 	
 	a = allocate(N, double);
 	if (a == NULL){
-		printf("Could not allocate enough memory: %d doubles\n", N);
+		fprintf(stderr, "Could not allocate enough memory: %d doubles\n", N);
 		return -1;
 	}
 	
@@ -40,20 +45,20 @@ int exercise1() {
 		a[i] = drand48();
 	}
 	
-	printf("\nMean:\t%lf\n", evalMean(a, N) );
-	printf("\nVariance:\t%lf\n", evalVariance(a, N) );
+	fprintf(stdout, "\nMean:\t%lf\n", evalMean(a, N) );
+	fprintf(stdout, "\nVariance:\t%lf\n", evalVariance(a, N) );
 	plotHistogram(a, N, NBIN, "title='Histogram of Random Values'");
 	
 	fp = fopen(filename, "r");
 	if(fp == NULL){
-		printf("Could not open file: %s\n", filename);
+		fprintf(stderr, "Could not open file: %s\n", filename);
 		return -2;
 	}
 
 	fscanf(fp, "%d", &np);
 	P = allocate(np, double);
 	if (P == NULL){
-		printf("Could not allocate enough memory: %d doubles\n", np);
+		fprintf(stderr, "Could not allocate enough memory: %d doubles\n", np);
 		return -1;
 	}
 	
@@ -72,7 +77,7 @@ int exercise1() {
 	
 	b = allocate(N, double);
 	if (b == NULL){
-		printf("Could not allocate enough memory: %d doubles\n", N);
+		fprintf(stderr, "Could not allocate enough memory: %d doubles\n", N);
 		return -1;
 	}
 	
@@ -80,8 +85,8 @@ int exercise1() {
 		b[i] = randomWheelSelect(a[i], P, np);
 	}
 	
-	printf("\nMean:\t%lf\n", evalMean(b, N) );
-	printf("\nVariance:\t%lf\n", evalVariance(b, N) );
+	fprintf(stdout, "\nMean:\t%lf\n", evalMean(b, N) );
+	fprintf(stdout, "\nVariance:\t%lf\n", evalVariance(b, N) );
 	plotHistogram(b, N, np, "title='Histogram of Random Wheel'");
 	
 	free(a);

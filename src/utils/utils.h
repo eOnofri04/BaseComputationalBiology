@@ -15,6 +15,7 @@
 #include <math.h>
 #include <stdbool.h>
 #include <string.h>
+#include <time.h>
 
 #include "../graphics/graphics.h"
 #include "../randomWalks/randomWalks.h"

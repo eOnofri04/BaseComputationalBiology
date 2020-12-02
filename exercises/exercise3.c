@@ -18,11 +18,11 @@
 
 #include "./exercise.h"
 
-#define N 10000
-#define D 3
-#define SEED 0
-#define Nsample 1000
-#define GRANULARITY 1
+#define N                 10000
+#define D                 3
+#define SEED (long)       1234
+#define Nsample           1000
+#define GRANULARITY       1
 #define MULTI_RANDOM_WALK "products/random_walks.tsv"
 
 int exercise3( void ){
@@ -37,6 +37,15 @@ int exercise3( void ){
 			*means,
 			*deviations;
 	FILE *fp;	// file to store the path
+	
+	fprintf(stdout, "-------------------------------------\n");
+	fprintf(stdout, "Parameters are:\n");
+	fprintf(stdout, " - Dimension of the random walk: %d\n", D);
+	fprintf(stdout, " - Length of the random walk: %d\n", N);
+	fprintf(stdout, " - Number of sampled elements: %d\n", Nsample);
+	fprintf(stdout, " - Granularity of the plot: %d\n", GRANULARITY);
+	fprintf(stdout, " - Simulation seed: %lu\n", SEED);
+	fprintf(stdout, "-------------------------------------\n");
 	
 	srand(SEED);
 	
@@ -84,22 +93,22 @@ int exercise3( void ){
 	
 	xs = callocate(Nsample * D, int);
 	if (xs == NULL){
-		printf("Could not allocate enough memory: %d int\n", Nsample * D);
+		fprintf(stderr, "Could not allocate enough memory: %d int\n", Nsample * D);
 		exit(-1);
 	}
 	means = callocate(N, double);
 	if (means == NULL){
-		printf("Could not allocate enough memory: %d int\n", N);
+		fprintf(stderr, "Could not allocate enough memory: %d int\n", N);
 		exit(-1);
 	}
 	deviations = callocate(N, double);
 	if (deviations == NULL){
-		printf("Could not allocate enough memory: %d int\n", N);
+		fprintf(stderr, "Could not allocate enough memory: %d int\n", N);
 		exit(-1);
 	}
 	fp = fopen(MULTI_RANDOM_WALK, "w");
 	if (fp == NULL){
-		printf("Could not open file: %s\n", MULTI_RANDOM_WALK);
+		fprintf(stderr, "Could not open file: %s\n", MULTI_RANDOM_WALK);
 		exit(-2);
 	}
 	
