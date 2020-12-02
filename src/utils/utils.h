@@ -43,6 +43,7 @@ double * evalFileAlphabethFrequency(char *filename);
 
 // from operands.c
 #define max(a,b) a>=b?a:b
+#define min(a,b) a<=b?a:b
 #define isApproxZero(x) fabs(x) < ERR
 #define isApprox(x, y) fabs(x - y) < ERR
 double evalMean(double *a, int n);

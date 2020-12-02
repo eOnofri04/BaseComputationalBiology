@@ -29,7 +29,7 @@
 #define SIM_STEP  10 // living time of the simulations
 #define START_LEN 60   // initial length of nucleotides + START & STOP codons
 #define MIN_LEN   10   // minimum number of protein
-#define POP_N     10  // entities number within the population
+#define POP_N     100  // entities number within the population
 #define SEED      1234
 #define SCORES_FILENAME "products/scores_simulation.tsv"
 
@@ -45,8 +45,6 @@ int exercise5(double (*score)(char *, int)){
 	FILE *fp;
 	
 	srand48(SEED);
-	
-	debug(0);
 	
 	// Population generation
 	for (i = 0; i < POP_N; i++){
@@ -64,8 +62,6 @@ int exercise5(double (*score)(char *, int)){
 		genotypes[i][len-1] = 'T';
 	}
 	
-	debug(1);
-	
 	fp = fopen(SCORES_FILENAME, "w");
 	
 	for (t = 0; t < SIM_STEP; t++){
@@ -73,6 +69,7 @@ int exercise5(double (*score)(char *, int)){
 		for (i = 0; i < POP_N; i++){
 			if (t > 0){
 				// mutation
+				punctualMutationInplace(&(genotypes[i]), 0.5);
 			}
 			len = encodeSequence(genotypes[i], (int) strlen(genotypes[i]), &fenotype);
 			Preproduce[i] = (len < MIN_LEN) ? 0 : score(fenotype, len);

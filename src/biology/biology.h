@@ -27,4 +27,10 @@ int encodeSequence(char *dna, int l, char **encodePtr);
 // from scoreFunctions.c
 double maxLysin(char *fenotype, int n);
 
+// from mutations.c
+int punctualMutationInplace(char **geno_ptr, double mutProb);
+void subMutationInplace(char *genotype);
+char * insMutation(char *genotype);
+char * delMutation(char *genotype);
+
 #endif /* biology_h */

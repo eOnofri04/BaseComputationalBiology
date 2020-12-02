@@ -22,6 +22,10 @@ char * generateNucleotideSequence(int n){
 	char *s;
 	int i;
 	s = allocate(n+1, char);
+	if (s == NULL){
+		printf("Could not allocate enough memory: %d chars\n", n + 1);
+		exit(-1);
+	}
 	for (i = 0; i < n; i++){
 		s[i] = nucleotides[rand()%4];
 	}
@@ -33,6 +37,10 @@ char * generateAmminoacidSequence(int n){
 	char *s;
 	int i;
 	s = allocate(n+1, char);
+	if (s == NULL){
+		printf("Could not allocate enough memory: %d chars\n", n + 1);
+		exit(-1);
+	}
 	for (i = 0; i < n; i++){
 		s[i] = amminoacides[rand()%20];
 	}
@@ -43,17 +51,23 @@ char * generateAmminoacidSequence(int n){
 char * convertDNA2RNA(char *dna, int n){
 	char *rna;
 	int i;
-	rna = allocate(n+1, char);
-	for (i = 0; i < n; i++){
+	int nr;
+	nr = min(n, (int) strlen(dna));
+	rna = allocate(nr+1, char);
+	if (rna == NULL){
+		printf("Could not allocate enough memory: %d chars\n", nr + 1);
+		exit(-1);
+	}
+	for (i = 0; i < nr; i++){
 		switch (dna[i]) {
 			case 'A': rna[i] = 'U'; break;
 			case 'T': rna[i] = 'A'; break;
 			case 'C': rna[i] = 'G'; break;
 			case 'G': rna[i] = 'C'; break;
-			default : exit(-4);
+			default : printf("ERROR: convertDNA2RNA - %d\n", dna[i]); exit(-4);
 		}
 	}
-	rna[n] = '\0';
+	rna[nr] = '\0';
 	return rna;
 }
 
@@ -65,7 +79,7 @@ char geneticEnconding(char *triplet){
 				case 'U': return triplet[2]=='G' ? 'M' : 'I';
 				case 'A': return triplet[2]=='A'||triplet[2]=='G' ? 'K' : 'N';
 				case 'G': return triplet[2]=='A'||triplet[2]=='G' ? 'R' : 'S';
-				default : exit(-3);
+				default : printf("ERROR: geneticEnconding\n"); exit(-3);
 			}
 		case 'C':
 			switch (triplet[1]) {
@@ -73,7 +87,7 @@ char geneticEnconding(char *triplet){
 				case 'G': return 'R';
 				case 'U': return 'L';
 				case 'A': return triplet[2]=='A'||triplet[2]=='G' ? 'Q' : 'H';
-				default : exit(-3);
+				default : printf("ERROR: geneticEnconding\n"); exit(-3);
 			}
 			break;
 			
@@ -83,7 +97,7 @@ char geneticEnconding(char *triplet){
 				case 'G': return 'G';
 				case 'U': return 'V';
 				case 'A': return triplet[2]=='A'||triplet[2]=='G' ? 'E' : 'D';
-				default : exit(-3);
+				default : printf("ERROR: geneticEnconding\n"); exit(-3);
 			}
 			break;
 			
@@ -93,11 +107,11 @@ char geneticEnconding(char *triplet){
 				case 'U': return triplet[2]=='A'||triplet[2]=='G' ? 'L' : 'F';
 				case 'A': return triplet[2]=='A'||triplet[2]=='G' ? '\0' : 'Y';
 				case 'G': return triplet[2]=='A' ? '\0' : (triplet[2]=='G' ? 'W' : 'C');
-				default : exit(-3);
+				default : printf("ERROR: geneticEnconding\n"); exit(-3);
 			}
 			break;
 		
-		default : exit(-3);
+		default : printf("ERROR: geneticEnconding\n"); exit(-3);
 	}
 	return 1;
 }
@@ -218,6 +232,10 @@ char * encodeSequenceExtended(char *dna, int l){
 	rna = convertDNA2RNA(dna, l);
 	
 	encode = callocate(l+1, char);
+	if (encode == NULL){
+		printf("Could not allocate enough memory: %d chars\n", l + 1);
+		exit(-1);
+	}
 	
 	ptr = findStartEncode(rna, l);
 	for (i = 0; i < ptr-3; i++){
@@ -285,6 +303,10 @@ int encodeSequence(char *dna, int l, char **encodePtr){
 	
 	n = (ptrStop-ptrStart)/3;
 	encode = callocate(n+1, char);
+	if (encode == NULL){
+		printf("Could not allocate enough memory: %d chars\n", n + 1);
+		exit(-1);
+	}
 	for (i = ptrStart; i < ptrStop; i+=3){
 		encode[j++] = geneticEnconding(&rna[i]);
 	}
