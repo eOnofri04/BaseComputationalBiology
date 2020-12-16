@@ -13,7 +13,7 @@ int main( void ){
 	clock_t start, stop;
 	fprintf(stdout, "Start computation...\n");
 	start = clock();
-	ans = exercise5(&maxLysin);
+	ans = exercise5(&maxLysinPercentageAndLength);
 	stop = clock();
 	fprintf(stdout, "Computation terminate with code %d\n", ans);
 	fprintf(stdout, "Elapsed time: %lf seconds\n\n", 1.*(stop - start)/CLOCKS_PER_SEC);

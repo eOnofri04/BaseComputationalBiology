@@ -36,8 +36,8 @@
 
 // from informationTheory.c
 #define NCHAR sizeof(char)
-double shannonEntropy(int *f, int n);
-double trueDiversity(int *f, int n, int q);
+double shannonEntropy(double *f, int n);
+double trueDiversity(double *f, int n, int q);
 double * evalFileFrequency(char *filename);
 double * evalFileFrequencyFromSet(char *filename, char *cset, int m);
 double * evalFileAlphabethFrequency(char *filename);

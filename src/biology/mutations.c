@@ -15,7 +15,7 @@ char * delMutation(char *genotype);
 /*
  *	int punctualMutationInplace(char **geno_ptr, double mutProb)
  *
- *	Perform a punctual mutation (ins/del/sub) with probability 1/2 on the
+ *	Perform a punctual mutation (ins/del/sub) with probability `mutProb` on the
  *	 specified `genotype`. The mutation is applied in place.
  *	The function returns the increment in length.
  */

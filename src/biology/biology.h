@@ -26,6 +26,8 @@ int encodeSequence(char *dna, int l, char **encodePtr);
 
 // from scoreFunctions.c
 double maxLysin(char *fenotype, int n);
+double maxLysinPercentage(char *fenotype, int n);
+double maxLysinPercentageAndLength(char *fenotype, int n, int maxlen, double alpha);
 
 // from mutations.c
 int punctualMutationInplace(char **geno_ptr, double mutProb);

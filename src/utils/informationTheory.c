@@ -7,36 +7,37 @@
 
 #include "utils.h"
 
-double shannonEntropy(int *f, int n);
-double trueDiversity(int *f, int n, int q);
+double shannonEntropy(double *f, int n);
+double trueDiversity(double *f, int n, int q);
 double * evalFileFrequency(char *filename);
 double * evalFileFrequencyFromSet(char *filename, char *cset, int m);
 double * evalFileAlphabethFrequency(char *filename);
 
 /*
- *	double ShannonEntropy(int* a, int n)
+ *	double ShannonEntropy(double *f, int n)
  *
  *	Evaluates the entropy of the array of frequencies `f` (of length `n`)
  *	It skips an entry when f[i] = 0;
  */
-double shannonEntropy(int *f, int n){
+double shannonEntropy(double *f, int n){
 	int i;
 	double H = 0;
 	
 	for (i = 0; i < n; i++) {
 		if (f[i] != 0){
-			H = f[i]*log(f[i]);
+			H += f[i]*log(f[i]);
 		}
 	}
 	
 	return -H;
 }
+
 /*
- *	double trueDiversity(int *f, int n, int q)
+ *	double trueDiversity(double *f, int n, int q)
  *
  *	Evaluates the `q`-th true diversity over frequencies `f` (of length `n`)
  */
-double trueDiversity(int *f, int n, int q){
+double trueDiversity(double *f, int n, int q){
 	int i;
 	double H = 0;
 	
